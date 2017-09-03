@@ -3,8 +3,7 @@
 
 import sys
 import os
-# from PyQt4.QtCore import *
-# from PyQt4.QtGui import *
+
 from PySide.QtCore import *
 from PySide.QtGui import *
 from SplitPDF import SplitPDF
@@ -221,7 +220,7 @@ class CentralWidget(QWidget):
         if self.input_text.text() and self.output_text.text():
             self.select_function()
         else:
-            show_message("Select INPUT & OUTPUT")
+            show_message("Check INPUT & OUTPUT")
 
     def close_click_method(self):
         self.dummy()
@@ -230,13 +229,19 @@ class CentralWidget(QWidget):
 
     def select_function(self):
         if self.__radio_status == "SB":
-            add_text(self.__input_file_path, self.__output_file_path, '1', self.start_page_text.text(),
-                     self.sb_text.text())
-            show_message("SB Finished!")
+            if self.start_page_text.text() and self.sb_text.text():
+                add_text(self.__input_file_path, self.__output_file_path, '1', self.start_page_text.text(),
+                         self.sb_text.text())
+                show_message("SB Finished!")
+            else:
+                show_message("Check SB & StartPageNum")
         elif self.__radio_status == "Instruction":
-            add_text(self.__input_file_path, self.__output_file_path, '2', self.start_page_text.text(),
-                     self.page_count_text.text())
-            show_message("Instruction Finished!")
+            if self.start_page_text.text() and self.page_count_text.text():
+                add_text(self.__input_file_path, self.__output_file_path, '2', self.start_page_text.text(),
+                         self.page_count_text.text())
+                show_message("Instruction Finished!")
+            else:
+                show_message("Check StartPageNum & StartPageCount")
         elif self.__radio_status == 'Split':
             pdf = SplitPDF(self.__input_file_path, self.__output_file_path)
             pdf.split()
@@ -246,9 +251,12 @@ class CentralWidget(QWidget):
             pdf.merge()
             show_message("Merge Finished!")
         elif self.__radio_status == "Rotate":
-            pdf = PdfRotate(self.__input_file_path, self.__output_file_path, self.rotate_degree_text.text())
-            pdf.rotate()
-            show_message("Rotate Finished!")
+            if self.rotate_degree_text.text():
+                pdf = PdfRotate(self.__input_file_path, self.__output_file_path, self.rotate_degree_text.text())
+                pdf.rotate()
+                show_message("Rotate Finished!")
+            else:
+                show_message("Check Degree")
         else:
             pass
 
