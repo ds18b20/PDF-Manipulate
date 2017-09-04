@@ -275,7 +275,7 @@ def quit_app():
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
-        self.setWindowTitle("PDF manipulate")
+        self.setWindowTitle("PDF Manipulate")
         self.setWindowIcon(QIcon('ebr.png')) 
         self.resize(600, 300)
         
